@@ -1,6 +1,5 @@
-package cat.RobotTruck;
+package cat.robottruck;
 
-import cat.robottruck.RobotTruckService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -44,7 +43,7 @@ class RobotTruckServiceTest {
         robotService.place(0, 0, "NORTH");
         robotService.turnRight();
         assertThat(robotService.report())
-                .isEqualTo("0,1,EAST");
+                .isEqualTo("0,0,EAST");
     }
 
     @Test
@@ -52,5 +51,47 @@ class RobotTruckServiceTest {
         robotService.place(0, 0, "NORTH");
         assertThat(robotService.report())
                 .isEqualTo("0,0,NORTH");
+    }
+
+    @Test
+    void tesMoveOutOfAreaDoesNotMoveTheTruck() {
+        robotService.place(4, 4, "NORTH");
+        robotService.move();
+        assertThat(robotService.report())
+                .isEqualTo("4,4,NORTH");
+
+        robotService.place(0, 0, "SOUTH");
+        robotService.move();
+        assertThat(robotService.report())
+                .isEqualTo("0,0,SOUTH");
+
+        robotService.place(4, 4, "EAST");
+        robotService.move();
+        assertThat(robotService.report())
+                .isEqualTo("4,4,EAST");
+
+        robotService.place(0, 0, "WEST");
+        robotService.move();
+        assertThat(robotService.report())
+                .isEqualTo("0,0,WEST");
+
+    }
+
+    @Test
+    void testPlaceOutOfBoundsReportsMissingRobot() {
+        robotService.place(-10, 0, "WEST");
+
+        assertThat(robotService.report())
+                .isEqualTo("ROBOT MISSING");
+
+        // Should ignore any move or turn commands if no robot
+        robotService.move();
+        robotService.turnLeft();
+        robotService.turnRight();
+
+
+        assertThat(robotService.report())
+                .isEqualTo("ROBOT MISSING");
+
     }
 }

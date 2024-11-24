@@ -1,17 +1,18 @@
-package cat.RobotTruck;
+package cat.robottruck.truck;
 
 import cat.robottruck.RobotTruck;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RobotTruckTest {
+public class RobotTruckTest {
 
     private RobotTruck robotTruck;
 
     @Test
     void testInitialPositionAndDirection() {
-        robotTruck = new RobotTruck(2, 2, "NORTH");
+        robotTruck = new RobotTruck();
+        robotTruck.place(2, 2, "NORTH");
         assertThat(robotTruck.report())
                 .isEqualTo("2,2,NORTH")
                 .as("Initial position and direction should be correctly set");
@@ -19,7 +20,8 @@ class RobotTruckTest {
 
     @Test
     void testMoveNorth() {
-        robotTruck = new RobotTruck(2, 2, "NORTH");
+        robotTruck = new RobotTruck();
+        robotTruck.place(2, 2, "NORTH");
         robotTruck.move();
         assertThat(robotTruck.report())
                 .isEqualTo("2,3,NORTH")
@@ -28,7 +30,8 @@ class RobotTruckTest {
 
     @Test
     void testMoveSouth() {
-        robotTruck = new RobotTruck(2, 2, "SOUTH");
+        robotTruck = new RobotTruck();
+        robotTruck.place(2, 2, "SOUTH");
         robotTruck.move();
         assertThat(robotTruck.report())
                 .isEqualTo("2,1,SOUTH")
@@ -37,7 +40,8 @@ class RobotTruckTest {
 
     @Test
     void testMoveEast() {
-        robotTruck = new RobotTruck(2, 2, "EAST");
+        robotTruck = new RobotTruck();
+        robotTruck.place(2, 2, "EAST");
         robotTruck.move();
         assertThat(robotTruck.report())
                 .isEqualTo("3,2,EAST")
@@ -46,7 +50,8 @@ class RobotTruckTest {
 
     @Test
     void testMoveWest() {
-        robotTruck = new RobotTruck(2, 2, "WEST");
+        robotTruck = new RobotTruck();
+        robotTruck.place(2, 2, "WEST");
         robotTruck.move();
         assertThat(robotTruck.report())
                 .isEqualTo("1,2,WEST")
@@ -55,7 +60,8 @@ class RobotTruckTest {
 
     @Test
     void testTurnLeft() {
-        robotTruck = new RobotTruck(2, 2, "NORTH");
+        robotTruck = new RobotTruck();
+        robotTruck.place(2, 2, "NORTH");
         String result = robotTruck.turnLeft();
         assertThat(robotTruck.report())
                 .isEqualTo("2,2,WEST")
@@ -69,7 +75,8 @@ class RobotTruckTest {
 
     @Test
     void testTurnRight() {
-        robotTruck = new RobotTruck(2, 2, "NORTH");
+        robotTruck = new RobotTruck();
+        robotTruck.place(2, 2, "NORTH");
         robotTruck.turnRight();
         assertThat(robotTruck.report())
                 .isEqualTo("2,2,EAST")
@@ -83,14 +90,37 @@ class RobotTruckTest {
 
     @Test
     void testReport() {
-        robotTruck = new RobotTruck(2, 3, "EAST");
+        robotTruck = new RobotTruck();
+        robotTruck.place(2, 3, "EAST");
         assertThat(robotTruck.report())
                 .isEqualTo("2,3,EAST")
                 .as("Report should return the correct position and direction");
 
-        robotTruck = new RobotTruck(0, 0, "SOUTH");
+        robotTruck = new RobotTruck();
+        robotTruck.place(0, 0, "SOUTH");
         assertThat(robotTruck.report())
                 .isEqualTo("0,0,SOUTH")
                 .as("Report should return the correct position and direction");
     }
+
+    @Test
+    void testInitialPlacementOutOfBounds() {
+        robotTruck = new RobotTruck();
+        robotTruck.place(-4, -4, "NORTH");
+        robotTruck.move();
+        assertThat(robotTruck.report())
+                .isEqualTo("ROBOT MISSING")
+                .as("RobotTruck can not be created outside of the available area");
+    }
+
+    @Test
+    void testMoveOutOfBoundsToTheNorth() {
+        robotTruck = new RobotTruck();
+        robotTruck.place(4, 4, "NORTH");
+        robotTruck.move();
+        assertThat(robotTruck.report())
+                .isEqualTo("4,4,NORTH")
+                .as("RobotTruck can not be moved outside of the available area and should retain the original position and direction");
+    }
+
 }

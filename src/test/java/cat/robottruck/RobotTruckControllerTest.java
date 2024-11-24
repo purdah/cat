@@ -1,7 +1,5 @@
-package cat.RobotTruck;
+package cat.robottruck;
 
-import cat.robottruck.RobotTruckController;
-import cat.robottruck.RobotTruckService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;

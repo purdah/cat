@@ -1,5 +1,7 @@
 package cat.robottruck;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,10 +13,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RobotTruckService {
+    private static final Logger logger = LoggerFactory.getLogger(RobotTruckService.class);
     private RobotTruck robotTruck;
 
     public String place(int x, int y, String direction) {
-        robotTruck = new RobotTruck(x, y, direction);
+        robotTruck = new RobotTruck();
+        boolean isValidPlacement = robotTruck.place(x, y, direction);
+        if (!isValidPlacement) {
+            logger.error("Truck was placed outside the available area");
+        }
         return report();
     }
 
@@ -25,7 +32,7 @@ public class RobotTruckService {
 
     public String turnLeft() {
         robotTruck.turnLeft();
-        return "arst";
+        return report();
     }
 
     public String turnRight() {
@@ -34,6 +41,9 @@ public class RobotTruckService {
     }
 
     public String report() {
+        if (robotTruck == null) {
+            return "ROBOT MISSING";
+        }
         return robotTruck.report();
     }
 }
