@@ -25,7 +25,7 @@ class RobotTruckControllerTest {
 
     @Test
     void testPlace() throws Exception {
-        String mockResponse = "Placedd";
+        String mockResponse = "Placed";
         when(robotService.place(0, 0, "NORTH")).thenReturn(mockResponse);
 
         mockMvc.perform(post("/robot/place")
