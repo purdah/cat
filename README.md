@@ -37,15 +37,15 @@ The requirements indicate separate calls so that will be used.
 
 This leads to the following API calls:
 
-/robottruck/place?x=1&y=2&direction=NORTH
-    
-/robottruck/move
+[POST] /robottruck/place?x=1&y=2&direction=NORTH
 
-/robottruck/left
+[PUT] /robottruck/move
 
-/robottruck/right
+[PUT] /robottruck/left
 
-/robottruck/report
+[PUT] /robottruck/right
+
+[GET] /robottruck/report
 
 ## Errors
 
@@ -58,3 +58,56 @@ So the report command on an unplaced truck would be 'ROBOT MISSING', this would 
 There is no current support for removing the truck, an existing valid truck with an invalid place command will NOT remove or reset the truck state.
 
 Ie, PLACE 1,1,NORTH PLACE -1,-1,SOUTH REPORT would return 1,1,NORTH 
+
+
+## Manual Testing
+
+To run the application use the gradlew command to run up the spring boot application on the default port of 8080.
+
+1. **Verify `gradlew.bat` Permissions**
+    - Ensure the `gradlew.bat` file is executable. You can verify permissions by right-clicking the file, selecting *Properties*, and making sure no permissions are blocked under the *Security* tab.
+
+2. **Build the Project**
+    - In the root of the project directory, run the following command to build the project:
+      ```bash
+      gradlew.bat build
+      ```
+    - This will download all necessary dependencies and build the project. You should see `BUILD SUCCESSFUL` in the command prompt if everything is configured correctly.
+
+3. **Run the Application**
+    - To start the Spring Boot application, use the following command:
+      ```bash
+      gradlew.bat bootRun
+      ```
+    - By default, the application will be accessible at `http://localhost:8080`. You can confirm it’s running by visiting this URL in your web browser.
+
+4. **Run the rest calls using curl or preferred tool**
+    - Using curl run the commands:
+      ```bash
+      $ curl -X POST "http://localhost:8080/robot/place?x=1&y=1&direction=SOUTH"
+      > 1,1,SOUTH
+      ```
+      ```bash
+      $ curl -X PUT "http://localhost:8080/robot/move"
+      > 1,0,SOUTH
+      ```
+      ```bash
+      $ curl -X PUT "http://localhost:8080/robot/move"
+      > 1,0,SOUTH
+      ```
+      ```bash
+      $ curl -X PUT "http://localhost:8080/robot/right"
+      > 1,0,WEST
+      ```
+      ```bash
+      $ curl -X PUT "http://localhost:8080/robot/move"
+      > 0,0,WEST
+      ```
+      ```bash
+      $ curl -X PUT "http://localhost:8080/robot/move"
+      > 0,0,WEST
+      ```
+      ```bash
+      $ curl -X GET "http://localhost:8080/robot/report"
+      > 0,0,WEST
+      ```
