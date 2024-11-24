@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -41,7 +42,7 @@ class RobotTruckControllerTest {
         String mockResponse = "Moved";
         when(robotService.move()).thenReturn(mockResponse);
 
-        mockMvc.perform(post("/robot/move"))
+        mockMvc.perform(put("/robot/move"))
                .andExpect(status().isOk())
                .andExpect(content().string(mockResponse));
 
@@ -53,7 +54,7 @@ class RobotTruckControllerTest {
         String mockResponse = "Turned LEFT";
         when(robotService.turnLeft()).thenReturn(mockResponse);
 
-        mockMvc.perform(post("/robot/left"))
+        mockMvc.perform(put("/robot/left"))
                .andExpect(status().isOk())
                .andExpect(content().string(mockResponse));
 
@@ -65,7 +66,7 @@ class RobotTruckControllerTest {
         String mockResponse = "Turned RIGHT";
         when(robotService.turnRight()).thenReturn(mockResponse);
 
-        mockMvc.perform(post("/robot/right"))
+        mockMvc.perform(put("/robot/right"))
                .andExpect(status().isOk())
                .andExpect(content().string(mockResponse));
 

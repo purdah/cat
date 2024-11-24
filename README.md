@@ -37,15 +37,15 @@ The requirements indicate separate calls so that will be used.
 
 This leads to the following API calls:
 
-[POST] /robottruck/place?x=1&y=2&direction=NORTH
+1. [POST] /robottruck/place?x=1&y=2&direction=NORTH
 
-[PUT] /robottruck/move
+2. [PUT] /robottruck/move
 
-[PUT] /robottruck/left
+3. [PUT] /robottruck/left
 
-[PUT] /robottruck/right
+4. [PUT] /robottruck/right
 
-[GET] /robottruck/report
+5. [GET] /robottruck/report
 
 ## Errors
 
