@@ -26,17 +26,23 @@ public class RobotTruckService {
     }
 
     public String move() {
-        robotTruck.move();
+        if (robotTruck != null) {
+            robotTruck.move();
+        }
         return report();
     }
 
     public String turnLeft() {
-        robotTruck.turnLeft();
+        if (robotTruck != null) {
+            robotTruck.turnLeft();
+        }
         return report();
     }
 
     public String turnRight() {
-        robotTruck.turnRight();
+        if (robotTruck != null) {
+            robotTruck.turnRight();
+        }
         return report();
     }
 

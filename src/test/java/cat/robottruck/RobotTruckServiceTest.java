@@ -94,4 +94,13 @@ class RobotTruckServiceTest {
                 .isEqualTo("ROBOT MISSING");
 
     }
+
+    @Test
+    void testUnplacedRobotTruckIgnoresOtherCommands() {
+        // assumes that the truck has not been initialized by not calling .place()
+        assertThat(robotService.move()).isEqualTo("ROBOT MISSING");
+        assertThat(robotService.turnLeft()).isEqualTo("ROBOT MISSING");
+        assertThat(robotService.turnRight()).isEqualTo("ROBOT MISSING");
+        assertThat(robotService.report()).isEqualTo("ROBOT MISSING");
+    }
 }
